@@ -33,11 +33,7 @@ function App() {
     user = null;
   }
 
-  // ✅ Logout
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    window.location.href = "/login";
-  };
+  ;
 
   return (
     
@@ -70,9 +66,9 @@ function App() {
           <Route
             path="/course"
             element={
-              // <ProtectedRoute>
+              
                 <Course />
-                // </ProtectedRoute>
+               
               
             }
           />
