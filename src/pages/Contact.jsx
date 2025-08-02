@@ -13,52 +13,69 @@ import Footer from "../components/Footer";
 function Contact() {
 
   return (
-    <div>
-      <div >
-        <h1 className='text-4xl font-bold ml-120 mt-20'>Contact Us</h1>
-        <p className='mt-2 ml-65 text-xl'>Sipalaya info tech ready to provide the right solution according to your needs</p>
-        
+   <div>
+    
+    <div className="px-4 py-10 bg-gray-50">
+      <div className="text-center mb-10">
+        <h1 className="text-4xl font-bold text-blue-900">Contact Us</h1>
+        <p className="mt-2 text-lg text-gray-600">
+          Sipalaya Info Tech is ready to provide the right solution according to your needs.
+        </p>
       </div>
 
-      <div className='flex mt-20 ml-5 gap-13'>
-        <div className=' w-60 h-50 shadow-2xl'>
-          <h1 className='ml-25 mt-8'><FaLocationDot size={30} /></h1>
-          <h1 className='text-2xl font-bold ml-17'>Location</h1>
-          <p className='mt-3 ml-2'> Nearby Bhat-Bhateni koteswor,</p>
-            <p  className='ml-18'> Kathmandu</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        {/* Location */}
+        <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition duration-300">
+          <div className="text-blue-600 mb-4 mx-auto w-fit">
+            <FaLocationDot size={30} />
+          </div>
+          <h2 className="text-xl font-semibold mb-2">Location</h2>
+          <p className="text-gray-700">Nearby Bhat-Bhateni, Koteswor</p>
+          <p className="text-gray-700">Kathmandu, Nepal</p>
         </div>
 
-        <div className=' w-60 h-50 shadow-2xl'>
-          <h1 className='ml-25 mt-8'><FaPhoneVolume size={30} /></h1>
-          <h1 className='text-2xl font-bold ml-18'>Contact</h1>
-          <p className='mt-3 ml-14'>+977 9818968546</p>
-          <p  className='ml-14'>+977 9860552717</p>
+        {/* Contact */}
+        <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition duration-300">
+          <div className="text-green-600 mb-4 mx-auto w-fit">
+            <FaPhoneVolume size={30} />
+          </div>
+          <h2 className="text-xl font-semibold mb-2">Contact</h2>
+          <p className="text-gray-700">+977 9818968546</p>
+          <p className="text-gray-700">+977 9860552717</p>
         </div>
 
-        <div className=' w-60 h-50 shadow-2xl'>
-          <h1 className='ml-25 mt-8'><MdMarkEmailUnread size={30} /></h1>
-          <h1 className='text-2xl font-bold ml-22'>Email</h1>
-          <p  className='mt-3 ml-9'>infotech@sipalaya.com</p>
-          <p className='ml-2'>sipalayainfotech01@gmail.com</p>
+        {/* Email */}
+        <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition duration-300">
+          <div className="text-red-600 mb-4 mx-auto w-fit">
+            <MdMarkEmailUnread size={30} />
+          </div>
+          <h2 className="text-xl font-semibold mb-2">Email</h2>
+          <p className="text-gray-700">infotech@sipalaya.com</p>
+          <p className="text-gray-700">sipalayainfotech01@gmail.com</p>
         </div>
 
-        <div className='w-60 h-50 shadow-2xl'>
-          <h1 className='ml-25 mt-8'><FaPeopleRoof size={30} /></h1>
-         <h1 className='text-2xl font-bold ml-10'> Visit Between</h1>
-         <p className='mt-3 ml-13'>Mon-Fri: 8:00-5:00</p>
-         <p className='ml-7'>Saturday-Sunday Closed</p>
+        {/* Visiting Hours */}
+        <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition duration-300">
+          <div className="text-purple-600 mb-4 mx-auto w-fit">
+            <FaPeopleRoof size={30} />
+          </div>
+          <h2 className="text-xl font-semibold mb-2">Visit Between</h2>
+          <p className="text-gray-700">Mon–Fri: 8:00AM – 5:00PM</p>
+          <p className="text-gray-700">Saturday–Sunday: Closed</p>
         </div>
       </div>
 
       <div className="mt-50">
         <Form/>
-        <Footer/>
+        
         
 
       </div>
 
 
     </div>
+    <Footer/>
+   </div>
   )
 }
 

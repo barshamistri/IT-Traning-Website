@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Footer from "../components/Footer";
 
 const Admission = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,8 @@ const Admission = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const courses = [
     "Web Development",
@@ -22,123 +25,165 @@ const Admission = () => {
   const paymentOptions = ["eSewa", "Khalti", "Stripe", "PayPal"];
 
   const handleChange = (e) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // TODO: Replace alert with API call to backend
-    alert(`Thank you for your admission, ${formData.fullName}!`);
-    setSubmitted(true);
-
-    setFormData({
-      fullName: "",
-      email: "",
-      phone: "",
-      course: "",
-      paymentPreference: "eSewa",
+  try {
+    const response = await fetch("http://localhost:5000/api/admission", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
     });
-  };
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert(data.message);
+      setSubmitted(true);
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        course: "",
+        paymentPreference: "eSewa",
+      });
+    } else {
+      alert(data.message || "Failed to submit admission");
+    }
+  } catch (error) {
+    alert("Error submitting form: " + error.message);
+  }
+};
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">Admission Form</h1>
+    <div>
+      <div className="max-w-3xl mx-auto px-6 py-10 bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-xl">
+        <h1 className="text-5xl font-extrabold mb-10 text-center text-blue-900">
+          Admission Form
+        </h1>
 
-      {submitted && (
-        <div className="mb-6 p-4 bg-green-100 text-green-800 rounded">
-          Your admission request has been submitted successfully!
-        </div>
-      )}
+        {submitted && (
+          <div className="mb-6 p-4 bg-green-100 text-green-800 rounded-lg text-center font-medium shadow">
+            Your admission request has been submitted successfully!
+          </div>
+        )}
 
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md">
-        <label className="block mb-2 font-semibold" htmlFor="fullName">
-          Full Name
-        </label>
-        <input
-          id="fullName"
-          name="fullName"
-          type="text"
-          required
-          placeholder="Your full name"
-          value={formData.fullName}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        {error && (
+          <div className="mb-6 p-4 bg-red-100 text-red-800 rounded-lg text-center font-medium shadow">
+            {error}
+          </div>
+        )}
 
-        <label className="block mb-2 font-semibold" htmlFor="email">
-          Email Address
-        </label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          required
-          placeholder="you@example.com"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-
-        <label className="block mb-2 font-semibold" htmlFor="phone">
-          Phone Number
-        </label>
-        <input
-          id="phone"
-          name="phone"
-          type="tel"
-          required
-          placeholder="e.g., 9851234567"
-          value={formData.phone}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-
-        <label className="block mb-2 font-semibold" htmlFor="course">
-          Select Course
-        </label>
-        <select
-          id="course"
-          name="course"
-          required
-          value={formData.course}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white p-8 rounded-xl shadow-md space-y-6"
         >
-          <option value="" disabled>
-            -- Choose a course --
-          </option>
-          {courses.map((course) => (
-            <option key={course} value={course}>
-              {course}
-            </option>
-          ))}
-        </select>
+          {/* Full Name */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
+              Full Name
+            </label>
+            <input
+              name="fullName"
+              type="text"
+              required
+              placeholder="Your full name"
+              value={formData.fullName}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+            />
+          </div>
 
-        <label className="block mb-2 font-semibold" htmlFor="paymentPreference">
-          Payment Preference
-        </label>
-        <select
-          id="paymentPreference"
-          name="paymentPreference"
-          value={formData.paymentPreference}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded px-3 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          {paymentOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
+          {/* Email */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
+              Email Address
+            </label>
+            <input
+              name="email"
+              type="email"
+              required
+              placeholder="you@example.com"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+            />
+          </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 transition"
-        >
-          Submit Admission
-        </button>
-      </form>
+          {/* Phone */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
+              Phone Number
+            </label>
+            <input
+              name="phone"
+              type="tel"
+              required
+              placeholder="e.g., 9851234567"
+              value={formData.phone}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+            />
+          </div>
+
+          {/* Course */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
+              Select Course
+            </label>
+            <select
+              name="course"
+              required
+              value={formData.course}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+            >
+              <option value="" disabled>
+                -- Choose a course --
+              </option>
+              {courses.map((course) => (
+                <option key={course} value={course}>
+                  {course}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Payment Preference */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
+              Payment Preference
+            </label>
+            <select
+              name="paymentPreference"
+              value={formData.paymentPreference}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+            >
+              {paymentOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300 shadow-md disabled:opacity-50"
+          >
+            {loading ? "Submitting..." : "Submit Admission"}
+          </button>
+        </form>
+      </div>
+
+      <Footer />
     </div>
   );
 };

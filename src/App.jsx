@@ -8,10 +8,15 @@ import Register from "./pages/Register";
 import Admission from "./pages/Admission";
 import Course from "./pages/Course";
 import Contact from "./pages/Contact";
-import ProtectedRoute from "./components/ProtectedRoute";
+// import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Profile from "./pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
+import Payment from "./Payment/Payment"
+import Success from "./Payment/Success";  // ✅ Import this component
+import Failure from "./Payment/Failure";
+import Enroll from "./pages/Enroll"
+
 
  
 
@@ -44,9 +49,14 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<BlogList />} />
           <Route path="/blog/:id" element={<BlogPost />} />
+             <Route path="/payment" element={<Payment />} /> 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
            <Route path="/profile" element={<Profile />} />
+           <Route path="/success" element={<Success />} />
+ {/* ✅ Add this */}
+        <Route path="/failure" element={<Failure />} />
+        <Route path="/enroll/:courseId" element={<PrivateRoute><Enroll /></PrivateRoute>} />
            
 
           <Route
@@ -60,8 +70,9 @@ function App() {
           <Route
             path="/course"
             element={
-              
+              // <ProtectedRoute>
                 <Course />
+                // </ProtectedRoute>
               
             }
           />

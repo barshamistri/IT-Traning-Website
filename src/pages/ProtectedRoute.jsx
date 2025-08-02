@@ -1,22 +1,17 @@
-// src/pages/ProtectedRoute.jsx
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { isLoggedIn } from "./utils/auth"; // import the helper
 
-import React, { useContext, useEffect } from "react";
-import { AuthContext } from "../context/AuthProvider";
-import { useNavigate } from "react-router-dom";
+const ProtectedRoute = ({ children }) => {
+  if (!isLoggedIn()) {
+    // user is NOT logged in, redirect to login page
+    return <Navigate to="/login" replace />;
+  }
 
-const ProtectedRoutes = ({ compo: Component }) => {
-  const { isAuth } = useContext(AuthContext); // ❗ Will crash if context not set up
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isAuth) {
-      navigate("/login");
-    }
-  }, [isAuth, navigate]);
-
-  return isAuth ? <Component /> : null;
+ if (res.data.success) {
+  localStorage.setItem("user", JSON.stringify(res.data.user));
+  navigate("/courses");
+}
 };
 
-export default ProtectedRoutes;
-
+export default ProtectedRoute;

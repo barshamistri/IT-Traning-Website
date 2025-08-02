@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const courses = [
   {
@@ -173,12 +174,54 @@ const courses = [
   },
 ];
 
+
+
 const Course = () => {
   const navigate = useNavigate();
+   
+
+const isLoggedIn = () => {
+  try {
+    const userData = localStorage.getItem("user");
+    if (!userData || userData === "undefined" || userData === "null") {
+      // If no user or invalid string, treat as not logged in
+      return false;
+    }
+    const user = JSON.parse(userData);
+    return user && typeof user === "object";
+  } catch (err) {
+    console.error("Login check failed:", err);
+    return false;
+  }
+};
+
+
+
+const handleEnroll = (course) => {
+  if (!isLoggedIn()) {
+    localStorage.setItem("pendingCourse", JSON.stringify(course));
+    navigate("/login");
+  } else {
+    navigate("/payment", { state: { totalAmount: course.price } });
+  }
+};
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
-    <div className="bg-gray-100 min-h-screen p-6">
-      <h1 className="text-4xl font-bold text-center mb-12 text-indigo-600">Our Courses</h1>
+    <div>
+      <div className="bg-gray-100 min-h-screen p-6">
+      <h1 className="text-4xl font-bold text-center mb-12 text-blue-800">Our Courses</h1>
+     <p className="text-gray-600 mt-2 text-lg max-w-xl mx-auto">
+  Explore our wide range of professional courses designed to help you{" "}
+  <span className="font-semibold text-indigo-600 ml-20">
+    upgrade your skills and build your career in tech.
+  </span>
+</p> <br />
+
+
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
         {courses.map((course) => (
           <div
@@ -196,8 +239,8 @@ const Course = () => {
             <div className="flex justify-between items-center">
               <span className="text-green-600 font-bold">{course.price}</span>
               <button
-                onClick={() => navigate("/payment", { state: { totalAmount: course.price } })}
-                className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-green-600 transition"
+               onClick={() => handleEnroll(course)}
+                className="bg-blue-800 text-white px-4 py-2 rounded hover:bg-green-600 transition"
               >
                 Enroll Now
               </button>
@@ -205,6 +248,17 @@ const Course = () => {
           </div>
         ))}
       </div>
+
+       <button
+        onClick={scrollToTop}
+        className="fixed bottom-8 right-8 bg-blue-800 text-white p-3 rounded-full shadow-lg hover:bg-red-700 transition"
+        aria-label="Back to top"
+      >
+        ↑
+      </button>
+   
+    </div>
+    <Footer/>
     </div>
   );
 };

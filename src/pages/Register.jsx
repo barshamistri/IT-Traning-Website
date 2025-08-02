@@ -1,128 +1,135 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaUser, FaPhoneAlt, FaEnvelope, FaLock } from "react-icons/fa";
 
 function Register() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");  // Add error message state
   const navigate = useNavigate();
 
   const handelSubmit = async (e) => {
     e.preventDefault();
+    setErrorMsg(""); // reset error message on new submit
 
     if (!name || !email || !phone || !password) {
-      alert("All fields are required!");
+      setErrorMsg("All fields are required!");
       return;
     }
 
     if (password.length < 8) {
-      alert("Password must be at least 8 characters!");
+      setErrorMsg("Password must be at least 8 characters!");
       return;
     }
 
-    let response = await fetch("http://localhost:5000/api/user/register", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name, email, phone, password }),
-    });
+    try {
+      let response = await fetch("http://localhost:5000/api/user/register", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ name, email, phone, password }),
+      });
 
-    if (response.ok) {
-      response = await response.json();
-      alert(response.message + "!");
-      setName("");
-      setEmail("");
-      setPassword("");
-      setPhone("");
-      navigate("/contact");
-      return;
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(data.message + "!");
+        setName("");
+        setEmail("");
+        setPassword("");
+        setPhone("");
+        navigate("/contact");
+      } else {
+        // Show backend error message (like email/phone exists)
+        setErrorMsg(data.message || "Registration failed");
+      }
+    } catch (error) {
+      setErrorMsg("Something went wrong. Please try again.");
     }
-    alert("Error");
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-blue-100 p-4">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-tr from-purple-200 via-blue-200 to-pink-200 p-6">
       <form
         onSubmit={handelSubmit}
-        className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md space-y-6"
+        className="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-md space-y-7"
       >
-        <h2 className="text-2xl font-bold text-center text-gray-800">
-          Create Account
+        <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-6">
+          Create Your Account
         </h2>
 
-        <div>
-          <label htmlFor="name" className="block mb-1 font-medium text-gray-700">
-            Name
-          </label>
+        {/* Show error message */}
+        {errorMsg && (
+          <p className="text-center text-red-600 font-semibold mb-2">{errorMsg}</p>
+        )}
+
+        {/* Name */}
+        <div className="relative">
+          <FaUser className="absolute left-3 top-3.5 text-purple-500" />
           <input
             id="name"
             type="text"
             placeholder="Enter your name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+            className="w-full pl-10 pr-4 py-3 border border-purple-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 transition"
           />
         </div>
 
-        <div>
-          <label htmlFor="phone" className="block mb-1 font-medium text-gray-700">
-            Phone
-          </label>
+        {/* Phone */}
+        <div className="relative">
+          <FaPhoneAlt className="absolute left-3 top-3.5 text-purple-500" />
           <input
             id="phone"
             type="text"
             placeholder="Enter your phone number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+            className="w-full pl-10 pr-4 py-3 border border-purple-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 transition"
           />
         </div>
 
-        <div>
-          <label htmlFor="email" className="block mb-1 font-medium text-gray-700">
-            Email
-          </label>
+        {/* Email */}
+        <div className="relative">
+          <FaEnvelope className="absolute left-3 top-3.5 text-purple-500" />
           <input
             id="email"
             type="email"
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+            className="w-full pl-10 pr-4 py-3 border border-purple-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 transition"
           />
         </div>
 
-        <div>
-          <label
-            htmlFor="password"
-            className="block mb-1 font-medium text-gray-700"
-          >
-            Password
-          </label>
+        {/* Password */}
+        <div className="relative">
+          <FaLock className="absolute left-3 top-3.5 text-purple-500" />
           <input
             id="password"
             type="password"
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+            className="w-full pl-10 pr-4 py-3 border border-purple-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 transition"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-purple-700 text-white py-2 rounded-md transition"
+          className="w-full bg-blue-800 hover:bg-blue-600 text-white font-semibold py-3 rounded-xl shadow-md transition"
         >
           Register
         </button>
 
-        <p className="text-center text-sm text-gray-600 mt-4">
-          Already have an account?{' '}
+        <p className="text-center text-sm text-gray-600 mt-3">
+          Already have an account?{" "}
           <span
             onClick={() => navigate("/login")}
-            className="text-blue-400 font-medium cursor-pointer hover:underline"
+            className="text-red-600 font-semibold cursor-pointer hover:underline"
           >
             Login here
           </span>

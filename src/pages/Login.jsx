@@ -1,112 +1,106 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { FiMail, FiLock } from "react-icons/fi";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState(""); 
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setErrorMsg("");
+
     try {
-      const res = await axios.post("http://localhost:5000/api/user/login", { email, password });
+      const res = await axios.post("http://localhost:5000/api/user/login", {
+        email,
+        password,
+      });
 
       if (res.data.success) {
         localStorage.setItem("user", JSON.stringify(res.data.user));
-        alert("Login successful!");
-        navigate("/profile");
-      } else {
-        alert(res.data.message || "You are not registered");
-        // Clear inputs on failed login
-        setEmail("");
-        setPassword("");
-      }
-    } catch (error) {
-      if (error.response) {
-        if (error.response.status === 401) {
-          alert("You are not registered or wrong credentials");
+
+        const pendingCourse = localStorage.getItem("pendingCourse");
+        if (pendingCourse) {
+          const course = JSON.parse(pendingCourse);
+          localStorage.removeItem("pendingCourse");
+          navigate("/payment", { state: { totalAmount: course.price } });
         } else {
-          alert(error.response.data.message || "Login failed");
+          navigate("/course");
         }
       } else {
-        alert("An unexpected error occurred. Please try again.");
+        setErrorMsg(res.data.message || "Invalid credentials");
       }
-      // Clear inputs on error
-      setEmail("");
-      setPassword("");
-      console.error("Login error:", error);
+    } catch (error) {
+      setErrorMsg(error.response?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-blue-100 px-4">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-lg mx-auto">
-        <h2 className="text-2xl font-bold text-center mb-1">Hello Again!</h2>
-        <p className="text-sm text-gray-500 text-center mb-6">
-          Welcome back you've been missed!
-        </p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 px-4 py-10">
+      <div className="bg-white shadow-2xl rounded-3xl p-10 w-full max-w-md">
+        <h2 className="text-4xl font-bold text-center text-gray-800 mb-6">
+          Welcome Back
+        </h2>
 
-        <form className="space-y-4" onSubmit={handleLogin}>
-          <input
-            type="email"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
-          />
-          <div className="text-right text-sm text-blue-500 cursor-pointer hover:underline">
-            Recover Password
+        {errorMsg && (
+          <div className="bg-red-100 text-red-700 px-4 py-2 rounded-md mb-4 text-center text-sm font-medium">
+            {errorMsg}
           </div>
+        )}
+
+        <form onSubmit={handleLogin} className="space-y-5">
+          <div className="relative">
+            <FiMail className="absolute left-3 top-3 text-gray-400 text-xl" />
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
+            />
+          </div>
+
+          <div className="relative">
+            <FiLock className="absolute left-3 top-3 text-gray-400 text-xl" />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
+            />
+          </div>
+
           <button
             type="submit"
-            className={`w-full py-2 rounded-md text-white transition ${
-              loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
-            }`}
             disabled={loading}
+            className={`w-full py-2 rounded-lg text-white text-lg font-semibold transition ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-900 hover:bg-blue-700"
+            }`}
           >
-            {loading ? "Logging in..." : "Log in"}
+            {loading ? "Logging in..." : "Log In"}
           </button>
         </form>
 
-        <div className="flex items-center my-4">
-          <hr className="flex-grow border-gray-300" />
-          <span className="mx-2 text-gray-400 text-sm">or continue with</span>
-          <hr className="flex-grow border-gray-300" />
-        </div>
-
-        <div className="flex justify-center gap-4">
-          <button className="border p-2 rounded-full hover:bg-gray-100">
-            <img src="https://img.icons8.com/color/24/google-logo.png" alt="Google" />
-          </button>
-          <button className="border p-2 rounded-full hover:bg-gray-100">
-            <img src="https://img.icons8.com/ios-glyphs/24/github.png" alt="GitHub" />
-          </button>
-          <button className="border p-2 rounded-full hover:bg-gray-100">
-            <img src="https://img.icons8.com/fluency/24/facebook-new.png" alt="Facebook" />
-          </button>
-        </div>
-
-        <p className="mt-6 text-sm text-center text-gray-500">
-          Not a member?{' '}
-          <span
-            onClick={() => navigate("/register")}
-            className="text-blue-600 font-medium cursor-pointer hover:underline"
+        <p className="mt-6 text-center text-gray-600 text-sm">
+          Don’t have an account?{" "}
+          <Link
+            to="/register"
+            className="text-red-600 hover:underline font-medium"
           >
-            Register Now
-          </span>
+            Register here
+          </Link>
         </p>
       </div>
     </div>

@@ -1,18 +1,31 @@
 const handleLogin = async (e) => {
   e.preventDefault();
-  try {
-    const res = await axios.post("http://localhost:5000/api/user/login", { email, password });
+  setLoading(true);
+  setErrorMsg("");
 
+  try {
+    const res = await axios.post("http://localhost:5000/api/user/login", {
+      email,
+      password,
+    });
+
+    // After successful login response
     if (res.data.success) {
+      // Save user info in localStorage
       localStorage.setItem("user", JSON.stringify(res.data.user));
-      alert("Login successful!");
-      navigate("/profile");
+      
+      // Redirect to courses page
+      navigate("/course");
     } else {
-      // Show the message returned by backend
-      alert(res.data.message || "You are not registered");
+      setErrorMsg(res.data.message || "Invalid credentials");
     }
-  } catch (err) {
-    console.error("Login error:", err);
-    alert("An error occurred during login. Please try again.");
+  } catch (error) {
+    if (error.response) {
+      setErrorMsg(error.response.data.message || "Login failed");
+    } else {
+      setErrorMsg("Network error. Please try again.");
+    }
   }
+
+  setLoading(false);
 };

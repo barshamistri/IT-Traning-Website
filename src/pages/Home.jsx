@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 
-import { FcSettings } from "react-icons/fc";
-import { FcGraduationCap } from "react-icons/fc";
-import { FcReadingEbook } from "react-icons/fc";
-import { FcOrganization } from "react-icons/fc";
+import { FcSettings, FcGraduationCap, FcReadingEbook, FcOrganization } from "react-icons/fc";
+import Footer from "../components/Footer";
 
 const coursesData = [
-  {
+   {
     id: 1,
     title: "Full Stack Web Development",
     category: "Web Development",
@@ -43,7 +41,7 @@ const coursesData = [
     image:
       "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=800&q=80",
   },
-  {
+   {
     id: 5,
     title: "Network Security Essentials",
     category: "Networking & Security",
@@ -61,7 +59,7 @@ const coursesData = [
     image:
       "https://images.unsplash.com/photo-1517433456452-f9633a875f6f?auto=format&fit=crop&w=800&q=80",
   },
-  {
+   {
     id: 7,
     title: "Introduction to Cloud Computing",
     category: "Cloud Computing",
@@ -79,7 +77,7 @@ const coursesData = [
     image:
       "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80",
   },
-  {
+   {
     id: 9,
     title: "Digital Marketing Fundamentals",
     category: "Digital Marketing",
@@ -97,7 +95,7 @@ const coursesData = [
     image:
       "https://images.unsplash.com/photo-1516251193007-45ef944ab0c6?auto=format&fit=crop&w=800&q=80",
   },
-  {
+    {
     id: 11,
     title: "Big Data Analytics",
     category: "Data Science & Analytics",
@@ -105,7 +103,7 @@ const coursesData = [
     description:
       "Learn to handle and analyze large data sets using Hadoop and Spark.",
     image:
-      "https://images.unsplash.com/photo-1537432376769-00aee8c59f2e?auto=format&fit=crop&w=800&q=80",
+      "https://cdn.bap-software.net/2023/02/what-is-Big-Data-analytics.jpg",
   },
   {
     id: 12,
@@ -117,7 +115,7 @@ const coursesData = [
     image:
       "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80",
   },
-  {
+{
     id: 13,
     title: "Graphic Design with Adobe Photoshop",
     category: "Graphic Design",
@@ -125,7 +123,7 @@ const coursesData = [
     description:
       "Learn graphic design basics and photo editing with Photoshop.",
     image:
-      "https://images.unsplash.com/photo-1504198453319-5ce911bafcde?auto=format&fit=crop&w=800&q=80",
+      "https://blog-frontend.envato.com/cdn-cgi/image/width=4800,quality=75,format=auto/uploads/sites/2/2022/05/graphic-design-tools.png",
   },
   {
     id: 14,
@@ -137,7 +135,7 @@ const coursesData = [
     image:
       "https://images.unsplash.com/photo-1518773553398-650c184e0bb3?auto=format&fit=crop&w=800&q=80",
   },
-  {
+ {
     id: 15,
     title: "Cloud Security Fundamentals",
     category: "Cloud Computing",
@@ -146,16 +144,7 @@ const coursesData = [
     image:
       "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
   },
-  {
-    id: 16,
-    title: "ReactJS Advanced Concepts",
-    category: "Web Development",
-    skillLevel: "Advanced",
-    description:
-      "Deep dive into React hooks, context API, and performance optimization.",
-    image:
-      "https://images.unsplash.com/photo-1517430816045-df4b7de7f1f9?auto=format&fit=crop&w=800&q=80",
-  },
+ 
 ];
 
 const experts = [
@@ -204,14 +193,11 @@ function Home() {
   const [category, setCategory] = useState("");
   const [skillLevel, setSkillLevel] = useState("");
   const [filteredCourses, setFilteredCourses] = useState(coursesData);
-
-  // Newsletter state
   const [email, setEmail] = useState("");
   const [newsletterMsg, setNewsletterMsg] = useState("");
 
   const handleSearch = (e) => {
     e.preventDefault();
-
     const filtered = coursesData.filter((course) => {
       const matchesKeyword = course.title
         .toLowerCase()
@@ -223,7 +209,6 @@ function Home() {
           : true;
       return matchesKeyword && matchesCategory && matchesSkill;
     });
-
     setFilteredCourses(filtered);
   };
 
@@ -242,95 +227,65 @@ function Home() {
   };
 
   return (
-    <div className="p-8 max-w-7xl mx-auto font-sans absolute">
-      {/* Header */}
-      <div className="ml-18 mt-10">
-        <div>
-          <h1 className="text-4xl font-bold">
-            IT TRAINING <br />
-            MANAGEMENT <br />
-            SYSTEM
-          </h1>
-          <p className="mt-5 ">
-            Elevate your career with our <br />
-            professional IT training courses.
-          </p>
-        </div>
-
-        <div className="mt-5 ">
-          <div className="bg-orange-400 w-110 h-8 pl-5 pt-0.5 text-white rounded-md">
+    <div>
+      <div>
+      <div className="p-8 max-w-7xl mx-auto font-sans relative">
+      <div className="relative mb-20 ml-7">
+        <h1 className="text-5xl font-bold leading-tight">
+          IT TRAINING <br /> MANAGEMENT <br /> SYSTEM
+        </h1>
+        <p className="mt-5 max-w-md text-xl ">
+          Elevate your career with our professional <br />IT training courses.
+        </p>
+        <div className="mt-5 space-y-2 max-w-xs">
+          <div className="bg-orange-400 h-8 flex items-center px-4 rounded-md text-white font-semibold w-110">
             New Python Course Launched
           </div>
-
-          <div className="bg-blue-400 w-110 mt-2 h-8 pl-5 pt-0.5 text-white rounded-md">
+          <div className="bg-blue-400 h-8 flex items-center px-4 rounded-md text-white font-semibold w-110">
             10% off for January batch!
           </div>
-
-          <div className="bg-blue-700 w-110 mt-2 h-8 pl-5 pt-0.5 text-white rounded-md">
+          <div className="bg-blue-700 h-8 flex items-center px-4 rounded-md text-white font-semibold cursor-pointer hover:bg-blue-800 transition duration-300 w-110">
             Enroll Now
           </div>
-
-          <div className="">
-            
-            <img src="https://blog.novatr.com/hubfs/A%20man%20coding%20on%20a%20computer-1.jpg" alt="Our Team" className="w-130 ml-130 h-100 absolute rounded-lg top-10" />
-
-          </div>
-
-
         </div>
+        <img
+          src="https://blog.novatr.com/hubfs/A%20man%20coding%20on%20a%20computer-1.jpg"
+          alt="Our Team"
+          className="w-250 max-w-lg rounded-lg object-cover h-100 absolute top-0 right-0 hidden md:block"
+          // style={{ maxHeight: "350px" }}
+        />
       </div>
 
-      <div className="mt-20 flex gap-20 ">
-        <h1 className="absolute ml-20 text-4xl font-bold">
+      <div className="mt-20 max-w-7xl mx-auto px-4">
+        <h1 className="text-4xl font-bold mb-8 text-center md:text-left">
           Highlight Features
         </h1>
-
-        <div className="flex w-150 ml-18 h-50 mt-20 ">
-          <div className="h-15 w-50 absolute">
-            <span className="absolute pl-5">
-              {" "}
-              <FcReadingEbook size={35} className="mr-3" />
-            </span>
-            <h1 className="pl-20 text-xl">IT training</h1>
+        <div className="flex flex-col md:flex-row md:space-x-10 space-y-10 md:space-y-0 items-center justify-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:w-2/3">
+            {[FcReadingEbook, FcGraduationCap, FcOrganization, FcSettings].map((Icon, i) => (
+              <div
+                key={i}
+                className="flex items-center space-x-4 p-4 border rounded-lg shadow-sm hover:shadow-md hover:border-blue-400 transition duration-300"
+              >
+                <Icon size={35} />
+                <h1 className="text-xl font-semibold">
+                  {['IT training', 'Certification preparation', 'Corporate workshops', 'Workshops'][i]}
+                </h1>
+              </div>
+            ))}
           </div>
-          <div className="ml-70  h-15 w-50 absolute">
-            {" "}
-            <span className="absolute pl-5">
-              {" "}
-              <FcGraduationCap size={35} className="mr-3" />
-            </span>{" "}
-            <h1 className="pl-20  text-xl">Certification preparation</h1>
+          <div className="bg-gray-200 p-6 rounded-md text-center md:w-1/3">
+            <h1 className="text-3xl">
+              <span className="font-bold">Over 5,000 students</span> <br />
+              successfully trained <br /> and placed in top <br /> companies.
+            </h1>
           </div>
-          <div className="mt-25 w-50 h-15">
-            {" "}
-            <span className="absolute pl-5">
-              {" "}
-              <FcOrganization size={35} className="mr-3" />
-            </span>
-            <h1 className="pl-20  text-xl">Corporate workshops</h1>
-          </div>
-          <div className="mt-25 ml-20 w-50 h-15 ">
-            {" "}
-            <span className="absolute pl-5">
-              {" "}
-              <FcSettings size={35} className="mr-3" />
-            </span>
-            <h1 className="pl-20  text-xl">Workshops</h1>
-          </div>
-        </div>
-
-        <div className="w-full  bg-gray-200 p-6 rounded-md mt-10">
-          <h1 className="text-3xl">
-            <span className="font-bold">Over 5,000 students</span> <br />
-            successfully trained <br /> and placed in top <br /> companies.
-          </h1>
         </div>
       </div>
 
-      {/* Search Section */}
       <form
         onSubmit={handleSearch}
-        className="flex flex-wrap items-center gap-4 border rounded-md p-4 bg-white shadow-md mt-16"
+        className="flex flex-wrap items-center gap-4 border rounded-md p-4 bg-white shadow-md mt-16 max-w-4xl mx-auto"
       >
         <input
           type="text"
@@ -339,40 +294,37 @@ function Home() {
           onChange={(e) => setKeyword(e.target.value)}
           className="flex-grow min-w-[200px] border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">Category (All)</option>
-          <option value="Programming">Programming</option>
-          <option value="Web Development">Web Development</option>
-          <option value="Data Science & Analytics">
-            Data Science & Analytics
-          </option>
-          <option value="Graphic Design">Graphic Design</option>
-          <option value="Mobile App Development">Mobile App Development</option>
-          <option value="Networking & Security">Networking & Security</option>
-          <option value="Software Testing">Software Testing</option>
-          <option value="UI/UX Design">UI/UX Design</option>
-          <option value="Cloud Computing">Cloud Computing</option>
-          <option value="Digital Marketing">Digital Marketing</option>
+          {[
+            "Programming",
+            "Web Development",
+            "Data Science & Analytics",
+            "Graphic Design",
+            "Mobile App Development",
+            "Networking & Security",
+            "Software Testing",
+            "UI/UX Design",
+            "Cloud Computing",
+            "Digital Marketing",
+          ].map((cat) => (
+            <option key={cat} value={cat}>{cat}</option>
+          ))}
         </select>
-
         <select
           value={skillLevel}
           onChange={(e) => setSkillLevel(e.target.value)}
           className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">Skill Level (All)</option>
-          <option value="Beginner">Beginner</option>
-          <option value="Intermediate">Intermediate</option>
-          <option value="Advanced">Advanced</option>
-          <option value="Expert">Expert</option>
-          <option value="All Levels">All Levels</option>
+          {["Beginner", "Intermediate", "Advanced", "Expert", "All Levels"].map((level) => (
+            <option key={level} value={level}>{level}</option>
+          ))}
         </select>
-
         <button
           type="submit"
           className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition"
@@ -381,13 +333,12 @@ function Home() {
         </button>
       </form>
 
-      {/* Courses list filtered */}
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
         {filteredCourses.length > 0 ? (
           filteredCourses.map((course) => (
             <div
               key={course.id}
-              className="border rounded-md p-4 shadow hover:shadow-lg transition"
+              className="border rounded-md p-4 shadow hover:shadow-xl transition duration-300 transform hover:-translate-y-1"
             >
               <img
                 src={course.image}
@@ -411,16 +362,15 @@ function Home() {
         )}
       </div>
 
-      {/* ------------------ Expert Instructors Section ------------------ */}
       <section className="mt-28">
         <h2 className="text-4xl font-bold mb-8 text-center">
           Meet Our Expert Instructors
         </h2>
-        <div className="flex flex-wrap justify-center gap-10">
+        <div className="flex flex-wrap justify-center gap-10 max-w-7xl mx-auto">
           {experts.map((expert) => (
             <div
               key={expert.id}
-              className="max-w-xs bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-2xl transition"
+              className="max-w-xs bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-2xl transition duration-300 transform hover:-translate-y-2"
             >
               <img
                 src={expert.image}
@@ -434,16 +384,15 @@ function Home() {
         </div>
       </section>
 
-      {/* ------------------ Testimonials Section ------------------ */}
-      <section className="mt-28 bg-gray-50 p-10 rounded-lg shadow-inner">
+      <section className="mt-28 bg-gray-50 p-10 rounded-lg shadow-inner max-w-7xl mx-auto">
         <h2 className="text-4xl font-bold mb-8 text-center">
           What Our Students Say
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial) => (
             <div
               key={testimonial.id}
-              className="bg-white p-6 rounded-lg shadow-md"
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-1"
             >
               <p className="italic text-gray-700 mb-4">"{testimonial.quote}"</p>
               <p className="font-semibold text-blue-700 text-right">
@@ -454,7 +403,6 @@ function Home() {
         </div>
       </section>
 
-      {/* ------------------ Newsletter Signup Section ------------------ */}
       <section className="mt-28 bg-blue-900 rounded-lg p-10 text-white text-center max-w-3xl mx-auto">
         <h2 className="text-3xl font-bold mb-4">Subscribe to Our Newsletter</h2>
         <p className="mb-6">
@@ -470,12 +418,12 @@ function Home() {
             placeholder="Your email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="p-3 rounded-md text-white flex-grow"
+            className="p-3 rounded-md text-white flex-grow bg-blue-800 placeholder-white"
             required
           />
           <button
             type="submit"
-            className="bg-white text-blue-600 font-semibold px-6 py-3 rounded-md hover:bg-gray-200 transition"
+            className="bg-white text-blue-600 font-semibold px-6 py-3 rounded-md hover:bg-gray-200 transition duration-300"
           >
             Subscribe
           </button>
@@ -483,14 +431,18 @@ function Home() {
         {newsletterMsg && <p className="mt-4 text-sm">{newsletterMsg}</p>}
       </section>
 
-      {/* ------------------ Back To Top Button ------------------ */}
       <button
         onClick={scrollToTop}
-        className="fixed bottom-8 right-8 bg-blue-800 text-white p-3 rounded-full shadow-lg hover:bg-red-700 transition"
+        className="fixed bottom-8 right-8 bg-blue-800 text-white p-3 rounded-full shadow-lg hover:bg-red-700 transition duration-300"
         aria-label="Back to top"
       >
         ↑
       </button>
+      
+    </div>
+   
+    </div>
+    <Footer/>
     </div>
   );
 }

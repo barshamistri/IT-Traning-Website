@@ -1,5 +1,6 @@
 import React from "react";
 import { RiTeamLine, RiLightbulbLine, RiFlagLine, RiChatSmile2Line } from "react-icons/ri";
+import Footer from "../components/Footer";
 
 const teamMembers = [
   {
@@ -35,7 +36,8 @@ const milestones = [
 
 function About() {
   return (
-    <div className="max-w-7xl mx-auto p-8 font-sans">
+   <div>
+     <div className="max-w-7xl mx-auto p-8 font-sans">
       {/* Header */}
       <header className="text-center mb-16">
         <h1 className="text-5xl font-extrabold mb-4">About Us</h1>
@@ -128,19 +130,24 @@ function About() {
       </section>
 
       {/* Call To Action */}
-      <section className="bg-blue-600 text-white rounded-lg p-12 text-center">
+      <section className="bg-blue-400 text-white rounded-lg p-12 text-center">
         <h2 className="text-3xl font-bold mb-6">Ready to start your IT career?</h2>
         <p className="mb-8 max-w-xl mx-auto text-lg">
           Join thousands of students who have transformed their lives with our training programs.
         </p>
         <a
           href="/contact"
-          className="inline-block bg-white text-blue-600 font-semibold px-8 py-3 rounded-md hover:bg-gray-100 transition"
+          className="inline-block bg-white text-blue-800 font-semibold px-8 py-3 rounded-md hover:bg-gray-100 transition"
         >
           Contact Us Today
         </a>
       </section>
+      
+        
+     
     </div>
+    <Footer/>
+   </div>
   );
 }
 

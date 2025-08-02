@@ -4,36 +4,45 @@ import CryptoJS from "crypto-js";
 
 function Payment() {
   const location = useLocation();
-
-  // Get totalAmount from location.state (e.g. "Rs. 15,000" or "12000")
   const { totalAmount } = location.state || {};
-
-  // Clean totalAmount string: remove anything except digits
-  // So "Rs. 15,000" becomes "15000"
   const amountNumber = totalAmount
     ? Number(String(totalAmount).replace(/[^\d]/g, ""))
     : 0;
 
-  // If amount is invalid, show error
   if (!amountNumber || isNaN(amountNumber)) {
-    return <div>Please select a course first to proceed with payment.</div>;
+    return (
+      <div className="flex items-center justify-center h-screen bg-red-50">
+        <div className="text-xl font-semibold text-red-500">
+          Please select a course first to proceed with payment.
+        </div>
+      </div>
+    );
   }
 
-  // Generate unique transaction ID
   const transaction_uuid = uuidv4();
-
-  // Prepare message for eSewa signature (adjust keys as needed)
   const message = `total_amount=${amountNumber},transaction_uuid=${transaction_uuid},product_code=EPAYTEST`;
-  const hash = CryptoJS.HmacSHA256(message, "8gBm/:&EnhH.1/q"); // Your secret key here
+  const hash = CryptoJS.HmacSHA256(message, "8gBm/:&EnhH.1/q");
   const signature = CryptoJS.enc.Base64.stringify(hash);
 
   return (
-    <div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-orange-100 to-yellow-100 p-4">
       <form
-        className="shadow-2xl drop-shadow-gray-700 h-48 w-96 m-auto flex flex-col justify-center items-center"
+        className="bg-white shadow-2xl rounded-xl w-full max-w-md p-8 space-y-6"
         action="https://rc-epay.esewa.com.np/api/epay/main/v2/form"
         method="POST"
       >
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
+          Secure E-Sewa Payment
+        </h2>
+
+        <p className="text-center text-gray-600 mb-6">
+          You are paying:{" "}
+          <span className="text-orange-600 font-semibold">
+            Rs. {amountNumber}
+          </span>
+        </p>
+
+        {/* Hidden payment inputs */}
         <input type="hidden" name="amount" value={amountNumber} required />
         <input type="hidden" name="tax_amount" value="0" required />
         <input type="hidden" name="total_amount" value={amountNumber} required />
@@ -61,14 +70,10 @@ function Payment() {
         />
         <input type="hidden" name="signature" value={signature} required />
 
-        <h1 className="text-2xl">
-          Total Amount Rs. <span className="underline">{amountNumber}</span>
-        </h1>
-
         <input
           type="submit"
-          value="Payment With E-sewa"
-          className="bg-orange-200 mt-4 text-red-500 font-bold p-4 rounded-2xl cursor-pointer"
+          value="Pay with E-Sewa"
+          className="w-full bg-blue-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg transition duration-300"
         />
       </form>
     </div>
