@@ -234,46 +234,57 @@ function Home() {
         <h1 className="text-5xl font-bold leading-tight">
           IT TRAINING <br /> MANAGEMENT <br /> SYSTEM
         </h1>
-        <p className="mt-5 max-w-md text-xl ">
-          Elevate your career with our professional <br />IT training courses.
-        </p>
-        <div className="mt-5 space-y-2 max-w-xs">
-          <div className="bg-orange-400 h-8 flex items-center px-4 rounded-md text-white font-semibold w-110">
-            New Python Course Launched
-          </div>
-          <div className="bg-blue-400 h-8 flex items-center px-4 rounded-md text-white font-semibold w-110">
-            10% off for January batch!
-          </div>
-          <div className="bg-blue-700 h-8 flex items-center px-4 rounded-md text-white font-semibold cursor-pointer hover:bg-blue-800 transition duration-300 w-110">
-            Enroll Now
-          </div>
+        <p>
+  Elevate your career with our professional <br />IT training courses.
+</p>
+<div className="mt-5 space-y-2 max-w-xs">
+  <div className="bg-orange-400 h-8 flex items-center px-4 rounded-md text-white font-semibold w-90">
+    New Python Course Launched
+  </div>
+  <div className="bg-blue-400 h-8 flex items-center px-4 rounded-md text-white font-semibold w-90">
+    20% off for January batch!
+  </div>
+  <div className="bg-blue-700 h-8 flex items-center px-4 rounded-md text-white font-semibold cursor-pointer hover:bg-blue-800 transition duration-300 w-90">
+    Enroll Now
+  </div>
         </div>
         <img
           src="https://blog.novatr.com/hubfs/A%20man%20coding%20on%20a%20computer-1.jpg"
           alt="Our Team"
           className="w-250 max-w-lg rounded-lg object-cover h-100 absolute top-0 right-0 hidden md:block"
-          // style={{ maxHeight: "350px" }}
+          
         />
       </div>
 
       <div className="mt-20 max-w-7xl mx-auto px-4">
-        <h1 className="text-4xl font-bold mb-8 text-center md:text-left">
-          Highlight Features
-        </h1>
-        <div className="flex flex-col md:flex-row md:space-x-10 space-y-10 md:space-y-0 items-center justify-center">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:w-2/3">
-            {[FcReadingEbook, FcGraduationCap, FcOrganization, FcSettings].map((Icon, i) => (
-              <div
-                key={i}
-                className="flex items-center space-x-4 p-4 border rounded-lg shadow-sm hover:shadow-md hover:border-blue-400 transition duration-300"
-              >
-                <Icon size={35} />
-                <h1 className="text-xl font-semibold">
-                  {['IT training', 'Certification preparation', 'Corporate workshops', 'Workshops'][i]}
-                </h1>
-              </div>
-            ))}
+  <h1 className="text-4xl font-bold mb-8 text-center md:text-left">
+    Highlight Features
+  </h1>
+
+  <div className="flex flex-col md:flex-row gap-8">
+    {/* Feature Boxes */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1">
+      {[FcReadingEbook, FcGraduationCap, FcOrganization, FcSettings].map(
+        (Icon, i) => (
+          <div
+            key={i}
+            className="flex items-center space-x-4 p-4 border rounded-lg shadow-sm hover:shadow-md hover:border-blue-400 transition duration-300"
+          >
+            <Icon size={35} />
+            <h1 className="text-lg font-semibold">
+              {
+                [
+                  "IT training",
+                  "Certification preparation",
+                  "Corporate workshops",
+                  "Workshops",
+                ][i]
+              }
+            </h1>
           </div>
+        )
+      )}
+    </div>
           <div className="bg-gray-200 p-6 rounded-md text-center md:w-1/3">
             <h1 className="text-3xl">
               <span className="font-bold">Over 5,000 students</span> <br />
